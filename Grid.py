@@ -13,26 +13,23 @@ class Grid:
         plt.axvline(0, color='black')
 
         plt.grid(color='grey', linestyle='--')
+        plt.xticks(np.arange(-25,25,1.0))
+        plt.yticks(np.arange(-25,25,1.0))
         #plt.show()
 
 
     def draw_function(self, func: sympy.Expr):
-        xvals = np.linspace(-5, 5, 40)
+        xvals = np.linspace(0, 5, 40)  # 20 points from -5 to 5 in ndarray
         x = sympy.Symbol('x')
 
         func_lambdified = sympy.lambdify(x, func, "numpy")
         yvals = func_lambdified(xvals)
 
         plt.plot(xvals, yvals)
-        plt.xlim(5)
-        plt.ylim(5)
+        plt.xlim(-5, 5)
+        plt.ylim(-5, 5)
 
-        left_border = min(yvals)
-        right_border = max(yvals)
-        plt.xticks(np.arange(int(min(left_border, -1*right_border)), int(right_border+1) + 1, 1.0))
-        plt.yticks(np.arange(int(min(left_border, -1*right_border)), int(right_border+1) + 1, 1.0))
-
-        plt.gca().set_aspect('equal', adjustable='box')
+        plt.gca().set_aspect('equal')#, adjustable='box')
         plt.show()
 
 
