@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.axes as axes
 import sympy
-import matplotlib.axes as axes
-import numpy
+import numpy as np
 
 from ExpressionParser import ExpressionParser
 
@@ -16,23 +15,24 @@ class Grid:
         plt.grid(color='grey', linestyle='--')
         #plt.show()
 
+
     def draw_function(self, func: sympy.Expr):
-        xvals = numpy.linspace(-5, 5, 20)  # 20 points from -5 to 5 in ndarray
+        xvals = np.linspace(-5, 5, 40)
         x = sympy.Symbol('x')
 
-        yvals = [func.subs(x, xval) for xval in xvals]  # evaluate f for each point in xvals
+        func_lambdified = sympy.lambdify(x, func, "numpy")
+        yvals = func_lambdified(xvals)
 
-        #plt.plot(xvals, yvals)
-
-        #fig, ax = plt.subplots()
         plt.plot(xvals, yvals)
-        #loc = ticker.MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
-        #plt.plot.set_major_locator(loc)
-        #plt.MultipleLocator(base=2.0)
-        #plt.xticks(numpy.arange(-5, 5, 1))
-        #plt.yticks(numpy.arange(-5, 5, 1))
-        #plt.xscale('linear')
-        #plt.yscale('linear')
+        plt.xlim(5)
+        plt.ylim(5)
+
+        left_border = min(yvals)
+        right_border = max(yvals)
+        plt.xticks(np.arange(int(min(left_border, -1*right_border)), int(right_border+1) + 1, 1.0))
+        plt.yticks(np.arange(int(min(left_border, -1*right_border)), int(right_border+1) + 1, 1.0))
+
+        plt.gca().set_aspect('equal', adjustable='box')
         plt.show()
 
 
