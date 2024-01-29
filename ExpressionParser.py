@@ -17,11 +17,11 @@ class ExpressionParser:
             if ('x' in expression and '=' in expression):
                 eq1, eq2 = expression.split('=')
                 total_eq = eq1+'- ('+ eq2 + ')'
-                total_eq_simplified = sympy.simplify(total_eq)
-                x = sympy.Symbol('x')
-                print(total_eq_simplified)
+                simplified = sympy.simplify(total_eq)
+                #x = sympy.Symbol('x')
+                #print(total_eq_simplified)
                 #eq = sympy.Eq(eq1, eq2)
-                simplified = sympy.solve(total_eq_simplified, x)
+                #simplified = sympy.solve(total_eq_simplified, x)
             elif ('x' in expression):
                 simplified = sympy.simplify(expression)
             else:
